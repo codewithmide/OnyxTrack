@@ -8,6 +8,7 @@ import Track from './track';
 import ProfileNavbar from './common/profileNav';
 import MyProduct from './myproduct';
 import { DashboardTabs } from './utils/tabs';
+import Verify from './verify'
 
 const Profile: React.FC = () => {
     const [activeTab, setActiveTab] = useState(0);
