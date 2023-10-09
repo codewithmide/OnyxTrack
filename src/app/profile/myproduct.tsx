@@ -6,6 +6,7 @@ import { useAccount } from 'wagmi';
 import CustomButton from '../components/common/button';
 import { IProductInfo, useProductContext } from '../context/productContext';
 import { UpdateModal } from '../components/updateModal';
+import { toast } from 'react-toastify';
 
 const MyProduct: React.FC = () => {
     const { address } = useAccount();
@@ -23,6 +24,32 @@ const MyProduct: React.FC = () => {
         setProductToUpdate(product);
         setUpdateModalActive(true);
     }
+
+    const copyProductDID = (vc: string | undefined) => {
+        if (!vc) {
+            console.error('Product DID is undefined');
+            return;
+        }
+
+        // Create a temporary input element to copy the text
+        const tempInput = document.createElement('input');
+        document.body.appendChild(tempInput);
+        tempInput.value = vc;
+        tempInput.select();
+
+        try {
+            // Execute the copy command
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Show a success toast message
+            toast.success('Product DID copied');
+        } catch (err) {
+            // Handle any errors that may occur during copying
+            console.error('Failed to copy product DID: ', err);
+            document.body.removeChild(tempInput);
+        }
+    };
 
     return (
         <div className='flex flex-col pt-8 pl-8'>
@@ -50,6 +77,15 @@ const MyProduct: React.FC = () => {
                             <div className='between text-[14px]'>
                                 <p className=''>Product ID:</p>
                                 <p className="font-semibold">{String(product.id).padStart(10, "0")}</p>
+                            </div>
+                            <div className='between text-[14px]'>
+                                <p className=''>Product DID:</p>
+                                <div className='gap-1 flex'>
+                                    <p className="font-semibold">{String(product.vc?.slice(0,8))}..</p>
+                                    <div onClick={() => copyProductDID(product.vc)} className='hover:scale-95 cursor-pointer duration-300'>
+                                        <img src="/svgs/copy.svg" alt="copy" />
+                                    </div>
+                                </div>
                             </div>
                             <div className='between text-[14px]'>
                                 <p className='text-[14px] break-all'>Receiver&rsquo;s Address:</p>
