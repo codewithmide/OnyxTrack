@@ -5,6 +5,8 @@ import { useWalletClient, usePublicClient, WalletClient, useWaitForTransaction }
 import { Address, getContract } from 'viem';
 import {AyaChainAbi} from './AyaChainAbi';
 import {NFTStorage, File} from 'nft.storage';
+import { DIDWithKeys, KeyDIDMethod, createAndSignCredentialJWT, getSupportedResolvers, verifyCredentialJWT } from "@jpmorganchase/onyx-ssi-sdk";
+import { David_Libre } from 'next/font/google';
 
 const AyaChainAddress = "0xd086dAB59F3d183b77c14E6FbbacC421adCD1634";
 
@@ -19,6 +21,7 @@ export interface IProductInfo {
     intermediariesLocation: string;
     productImage: File;
     status?: string;
+    vc?: string;
 }
 
 export interface IProductHistory {
@@ -37,6 +40,7 @@ interface ProductContextType {
     updateProduct: (product: IProductInfo, location: string, condition: string) => void;
     deliverProduct: (product: IProductInfo, condition: string) => void;
     getProductHistory: (productId: number) => Promise<IProductHistory[]>;
+    verifyVC: (vc: string) => Promise<boolean>;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -66,19 +70,24 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         return "https://ipfs.io/ipfs/" + url.slice(7); 
     }
 
-    const uploadCondition = async(name: string, condition: string, image: File) => {
+    const uploadCondition = async(name: string, condition: string, image: File, vc?: string) => {
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDEzRUNiM2JkNTg0ZDY0REExRTQ5QTNGMTUxMWM2MTYxMDc3OWI2QUIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0MDE1ODA5NTA0NSwibmFtZSI6Im5mdEhhY2sifQ.oKwSim4KHdU7Nh30fvxaCCjTLryTV0lItRdM4idE994'; // your API key from https://nft.storage/manage
 
         const storage = new NFTStorage({ token });
-        const metadata = await storage.store({
+        const metadata = vc ? await storage.store({
             name,
             description: condition,
-            image
+            image,
+            vc
+        }): await storage.store({
+            name,
+            description: condition,
+            image,
         })
         return metadata.url;
     }
 
-    const getConditions = async (conditionIpfsUrl: string): Promise<{condition: string, image: File}> => {
+    const getConditions = async (conditionIpfsUrl: string): Promise<{condition: string, image: File, vc: string}> => {
         const formatedUrl = formatIpfsUrl(conditionIpfsUrl);
         const res = await fetch(formatedUrl);
         const conditions = await res.json();
@@ -86,7 +95,8 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         const image = new File([imageBlob], conditions.name + ".png", { type: imageBlob.type });
         return {
             condition: conditions.description,
-            image
+            image,
+            vc: conditions.vc
         }
     }
 
@@ -115,21 +125,59 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
                 intermediariesLocation: _product.currentLocation,
                 receiversLocation: _product.deliveryLocation,
                 productImage: conditions.image,
-                status
+                status,
+                vc: conditions.vc,
             })
         }
         setProducts(_products);
     }
     
+    const createDid = async () => {
+        const didKey = new KeyDIDMethod();
+        const did: DIDWithKeys = await didKey.create();
+        return did;
+    }
+
+    const verifyVC = async(vc: string) => {
+        const didKey = new KeyDIDMethod();
+        const didResolver = getSupportedResolvers([didKey]);
+
+        const verified = await verifyCredentialJWT(vc, didResolver);
+        // console.log({verified});
+        return verified;
+    }
       
     const addProduct = async(product: IProductInfo) => {
+
+        // Create did
+        let didKey: DIDWithKeys = await createDid();
+        
+        // console.log({merchantDid: didKey});
+
+        // Create and sign vc
+        const subjectData = {
+            product: product.businessName,
+            sender: walletClient?.account.address,
+            receiver: product.receiversAddress,
+            intermediary: product.intermediariesWallet
+        };
+
+        const signedVc = await createAndSignCredentialJWT(
+            didKey,
+            product.receiversAddress,
+            subjectData,
+            []
+        );
+
+        // console.log(signedVc);
+
         const contract = getContract({
             address: AyaChainAddress,
             abi: AyaChainAbi,
             publicClient,
             walletClient
         })
-        const conditionUrl = await uploadCondition(product.businessName, product.condition, product.productImage);
+        const conditionUrl = await uploadCondition(product.businessName, product.condition, product.productImage, signedVc);
         const txHash = await contract.write.addProduct([
           product.businessName,
           product.receiversAddress,
@@ -236,7 +284,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     
 
     return (
-        <ProductContext.Provider value={{ products, addProduct, shipProduct, updateProduct, deliverProduct, getProductHistory }}>
+        <ProductContext.Provider value={{ products, addProduct, shipProduct, updateProduct, deliverProduct, getProductHistory, verifyVC }}>
             {children}
         </ProductContext.Provider>
     );
