@@ -3,8 +3,9 @@
 
 import { useAccount, useBalance } from "wagmi";
 import CustomButton from "../components/common/button";
-import { useState } from 'react'
+import { useState } from 'react';
 import { toast } from "react-toastify";
+import { useProductContext } from "../context/productContext";
 
 const Verify:React.FC = () => {
     const [inputValue, setInputValue] = useState('');
@@ -13,12 +14,28 @@ const Verify:React.FC = () => {
         address: address,
     })
 
-    const handleVerify = () => {
-        setTimeout(() => {
-            toast.success("Product Verified");
-            setInputValue('');
-        }, (1000))
-    }
+    const { verifyVC } = useProductContext();
+
+    const handleVerify = async () => {
+        if (!inputValue) {
+            toast.error('Please enter a Product DID');
+            return;
+        }
+
+        try {
+            const isValid = await verifyVC(inputValue);
+
+            if (isValid) {
+                toast.success('Product Verified');
+            } else {
+                toast.error('Invalid Product DID');
+            }
+        } catch (error) {
+            toast.error('Please enter the correct Product DID');
+        }
+
+        setInputValue('');
+    };
 
     return (
         <div className='flex flex-col gap-16 p-8'>
