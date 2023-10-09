@@ -26,6 +26,8 @@ const Profile: React.FC = () => {
             return <Add />;
           case 3:
             return <Track />;
+          case 4:
+            return <Verify />;
           default:
             return null;
         }
