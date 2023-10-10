@@ -20,7 +20,7 @@ export interface IProductInfo {
     intermediariesLocation: string;
     productImage: File;
     status?: string;
-    vc?: string;
+    vc: string;
 }
 
 export interface IProductHistory {
@@ -69,20 +69,16 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         return "https://ipfs.io/ipfs/" + url.slice(7); 
     }
 
-    const uploadCondition = async(name: string, condition: string, image: File, vc?: string) => {
+    const uploadCondition = async(name: string, condition: string, image: File, vc: string) => {
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDEzRUNiM2JkNTg0ZDY0REExRTQ5QTNGMTUxMWM2MTYxMDc3OWI2QUIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0MDE1ODA5NTA0NSwibmFtZSI6Im5mdEhhY2sifQ.oKwSim4KHdU7Nh30fvxaCCjTLryTV0lItRdM4idE994'; // your API key from https://nft.storage/manage
 
         const storage = new NFTStorage({ token });
-        const metadata = vc ? await storage.store({
+        const metadata = await storage.store({
             name,
             description: condition,
             image,
             vc
-        }): await storage.store({
-            name,
-            description: condition,
-            image,
-        })
+        });
         return metadata.url;
     }
 
@@ -198,7 +194,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
             publicClient,
             walletClient
         })
-        const conditionUrl = await uploadCondition(product.businessName, condition, product.productImage);
+        const conditionUrl = await uploadCondition(product.businessName, condition, product.productImage, product.vc);
         const shippedDate = new Date();
         if(product.id != undefined) {
             const txHash = await contract.write.shipProduct([
@@ -219,7 +215,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
             publicClient,
             walletClient
         })
-        const conditionUrl = await uploadCondition(product.businessName, condition, product.productImage);
+        const conditionUrl = await uploadCondition(product.businessName, condition, product.productImage, product.vc);
         if(product.id != undefined) {
             const txHash = await contract.write.updateProduct([
               BigInt(product.id),
@@ -238,7 +234,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
             publicClient,
             walletClient
         })
-        const conditionUrl = await uploadCondition(product.businessName, condition, product.productImage);
+        const conditionUrl = await uploadCondition(product.businessName, condition, product.productImage, product.vc);
         if(product.id != undefined) {
             const txHash = await contract.write.deliverProduct([
               BigInt(product.id),

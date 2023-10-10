@@ -5,7 +5,7 @@ import { useAccount, useBalance } from "wagmi";
 import CustomButton from "../components/common/button";
 import { useState } from 'react';
 import { toast } from "react-hot-toast";
-import { useProductContext } from "../context/productContext";
+import { IProductInfo, useProductContext } from "../context/productContext";
 
 const Verify:React.FC = () => {
     const [inputValue, setInputValue] = useState('');
@@ -13,31 +13,35 @@ const Verify:React.FC = () => {
     const { data } = useBalance({
         address: address,
     })
+    const [product, setProduct] = useState<IProductInfo>();
 
-    const { verifyVC } = useProductContext();
+    const { verifyVC, products } = useProductContext();
 
     const handleVerify = async () => {
         if (!inputValue) {
-            toast.error('Please enter a Product DID');
+            toast.error('Please enter a JWT token');
             return;
         }
 
         try {
             const isValid = await verifyVC(inputValue);
+            const _product = products.find((p) => p.vc == inputValue);
+            setProduct(_product);
 
             if (isValid) {
-                toast.success('Product Verified');
+                toast.success('Product is verified');
             } else {
-                toast.error('Invalid Product DID');
+                toast.error('Product is not verified');
             }
         } catch (error) {
-            toast.error('Please enter the correct Product DID');
+            toast.error('Invalid JWT token');
         }
 
         setInputValue('');
     };
 
     return (
+        <div>
         <div className='flex flex-col gap-16 p-8'>
             {address ? (
                 <div className='flex flex-col'>
@@ -51,7 +55,7 @@ const Verify:React.FC = () => {
                     </div>
                     <div className='h-[160px] gap-2 mt-10 border rounded-[12px] border-[#0000001A] bg-white p-6 flex flex-col'>
                         <p className="font-semibold">
-                            Enter a Product DID
+                            Enter verifiable credential
                         </p>
                         <div className="bg-[#F8F9FB] w-full between p-3 rounded-[18px]">
                             <div className="flex gap-4 w-full">
@@ -84,6 +88,38 @@ const Verify:React.FC = () => {
                 </div>
             )}
         </div>
+        {product && <div className='relative'>
+            <div className="flex justify-center">
+                <div className='bg-white rounded-[16px] border border-[#0000001A] flex-col flex w-[340px] p-4 text-[16px] gap-2'>
+                    {product?.productImage && (
+                        <img 
+                                                src={URL.createObjectURL(new File([product.productImage], 'product.png', { type: 'image/png' }))}
+                                                alt="image" className='w-full h-[250px] rounded-[12px] bg-cover object-cover' />
+                                            )}
+                                            <p className='font-semibold my-2'>{product?.businessName}</p>
+                                            <div className='between text-[14px]'>
+                                                <p className=''>Product ID:</p>
+                                                <p className="font-semibold">{String(product?.id).padStart(10, "0")}</p>
+                                            </div>
+                                            <div className='between text-[14px]'>
+                                                <p className='text-[14px] break-all'>Receiver&rsquo;s Address:</p>
+                                                <a href={`https://sepolia.etherscan.io/address/${product?.receiversAddress}`} target='_blank'>
+                                                    <span className='font-semibold text-blue'>{product?.receiversAddress.slice(0, 6)}..</span>
+                                                </a>
+                                            </div>
+                                            <div className='between text-[14px]'>
+                                                <p>Receiver&rsquo;s Location:</p>
+                                                <p className='font-semibold'>{product?.receiversLocation}</p>
+                                            </div>
+                                            <div className='between text-[14px]'>
+                                                <p>Status</p>
+                                                <p className='font-semibold'>{product?.status}</p>
+                                            </div>
+                                        </div>
+                                </div>
+                </div>}
+                </div>
+
     );
 }
  
