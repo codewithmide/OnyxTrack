@@ -144,6 +144,7 @@ const Add: React.FC = () => {
             yourLocation,
             receiversLocation,
             productImage: selectedImageFile,
+            vc: '',
         };
 
         await addProduct(newProductInfo);
