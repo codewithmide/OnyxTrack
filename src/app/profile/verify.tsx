@@ -88,18 +88,6 @@ const Verify:React.FC = () => {
                 </div>
             )}
         </div>
-        {product && <div className='relative'>
-            <div className="flex justify-center">
-                <div className='bg-white rounded-[16px] border border-[#0000001A] flex-col flex w-[340px] p-4 text-[16px] gap-2'>
-                    <p className='font-semibold my-2 mx-auto'>{product?.businessName}</p>
-                    {product?.productImage && (
-                        <img 
-                            src={URL.createObjectURL(new File([product.productImage], 'product.png', { type: 'image/png' }))}
-                            alt="image" className='w-full h-[250px] rounded-[12px] bg-cover object-cover' />
-                    )}
-                </div>
-             </div>
-        </div>}
     </div>);
 }
  
