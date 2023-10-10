@@ -1,14 +1,12 @@
 # OnyxTrack
 
-
-
 This repository contains OnyxTrack project developed with Next.js, TypeScript, Tailwindcss and RainbowKit for the frontend, and Solidity, Hardhat, and Ethers.js for the smart contract on the backend.
 
 ## Live urls
 
 [Frontend](https://onyx-track.vercel.app)
 
-[Smart contract]()
+[Smart contract](0xb715E099f67483A485782AaC292677cfCADCb420)
 
 ## Table of Contents
 
