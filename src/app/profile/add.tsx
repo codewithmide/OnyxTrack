@@ -153,7 +153,7 @@ const Add: React.FC = () => {
         toast.promise(
             resolveAfter3Sec,
             {
-                pending: 'Adding product',
+                loading: 'Adding product',
                 success: 'Product added successfully 👌',
                 error: 'Transaction failed 🤯'
             }
