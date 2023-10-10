@@ -79,7 +79,7 @@ const MyProduct: React.FC = () => {
                                 <p className="font-semibold">{String(product.id).padStart(10, "0")}</p>
                             </div>
                             <div className='between text-[14px]'>
-                                <p className=''>Verifiable Credential:</p>
+                                <p className=''>Product DID:</p>
                                 <div className='gap-1 flex'>
                                     <p className="font-semibold">{String(product.vc?.slice(0,8))}..</p>
                                     <div onClick={() => copyProductDID(product.vc)} className='hover:scale-95 cursor-pointer duration-300'>
