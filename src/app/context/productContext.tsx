@@ -88,6 +88,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     }
 
     const getConditions = async (conditionIpfsUrl: string): Promise<{condition: string, image: File, vc: string}> => {
+        console.log("getting products...");
         const formatedUrl = formatIpfsUrl(conditionIpfsUrl);
         const res = await fetch(formatedUrl);
         const conditions = await res.json();
@@ -129,6 +130,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
                 vc: conditions.vc,
             })
         }
+        console.log({products: _products})
         setProducts(_products);
     }
     
