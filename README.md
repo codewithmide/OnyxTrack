@@ -1,6 +1,6 @@
 # OnyxTrack
 
-![Banner](https://github.com/codewithmide/OnyxTrack/blob/main/public/icons/Banner.png)
+
 
 This repository contains OnyxTrack project developed with Next.js, TypeScript, Tailwindcss and RainbowKit for the frontend, and Solidity, Hardhat, and Ethers.js for the smart contract on the backend.
 
