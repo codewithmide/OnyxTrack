@@ -8,7 +8,7 @@ import {NFTStorage, File} from 'nft.storage';
 import { DIDWithKeys, KeyDIDMethod, createAndSignCredentialJWT, getSupportedResolvers, verifyCredentialJWT } from "@jpmorganchase/onyx-ssi-sdk";
 import { David_Libre } from 'next/font/google';
 
-const AyaChainAddress = "0xd086dAB59F3d183b77c14E6FbbacC421adCD1634";
+const AyaChainAddress = "0xb715E099f67483A485782AaC292677cfCADCb420";
 
 export interface IProductInfo {
     id?: number,

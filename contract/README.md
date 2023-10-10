@@ -1,10 +1,10 @@
-# OnyxTrack: Supply Chain Smart Contract
+# AyaChain: Supply Chain Smart Contract
 
-OnyxTrack is a Solidity smart contract designed for supply chain management. It enables the tracking of product movements, conditions, and histories on the Ethereum blockchain. This README provides an overview of the project, instructions for setting up and deploying the contract using the Hardhat framework, and details on testing and contract usage.
+AyaChain is a Solidity smart contract designed for supply chain management. It enables the tracking of product movements, conditions, and histories on the Ethereum blockchain. This README provides an overview of the project, instructions for setting up and deploying the contract using the Hardhat framework, and details on testing and contract usage.
 
 ## Deployed contract address
 
-[0xd086dAB59F3d183b77c14E6FbbacC421adCD1634](https://scan.pegotest.net/address/0xd086dAB59F3d183b77c14E6FbbacC421adCD1634/)
+[0xb715E099f67483A485782AaC292677cfCADCb420](https://sepolia.etherscan.io/address/0xb715E099f67483A485782AaC292677cfCADCb420)
 
 ## Table of Contents
 
@@ -22,9 +22,9 @@ OnyxTrack is a Solidity smart contract designed for supply chain management. It 
 
 ## Project Overview
 
-OnyxTrack is a supply chain management smart contract that leverages the Ethereum blockchain to provide transparency and traceability for products. It uses Solidity, a smart contract programming language, and is designed to be deployed on the Ethereum network.
+AyaChain is a supply chain management smart contract that leverages the Ethereum blockchain to provide transparency and traceability for products. It uses Solidity, a smart contract programming language, and is designed to be deployed on the Ethereum network.
 
-Key features of OnyxTrack include:
+Key features of AyaChain include:
 
 - Tracking the state, condition, and location of products.
 - Maintaining a history of product movements and changes in condition.
@@ -50,7 +50,7 @@ Before you begin, ensure you have the following installed on your system:
 
 ## Contract Deployment
 
-To deploy the OnyxTrack contract to an Ethereum network using Hardhat:
+To deploy the AyaChain contract to an Ethereum network using Hardhat:
 
 1. Set environment variables
    Copy .env-example to .env
@@ -62,7 +62,7 @@ To deploy the OnyxTrack contract to an Ethereum network using Hardhat:
 3. Run the deployment script:
 
    ```bash
-   npx hardhat run scripts/deploy.js --network base-goerli
+   npx hardhat run scripts/deploy.js
    ```
 
 ## Testing
@@ -77,15 +77,15 @@ The tests are defined in the `test` directory.
 
 ### Deploying
 
-Deploy contract to baseGoerli network
+Deploy contract
 
 ```bash
-npx hardhat run script/deploy.js --network pego-testnet
+npx hardhat run script/deploy.js
 ```
 
 ## Contract Functionality
 
-The OnyxTrack contract provides the following functionality:
+The AyaChain contract provides the following functionality:
 
 - Adding a new product to the supply chain.
 - Shipping a product and updating its state, condition, and location.
@@ -96,7 +96,7 @@ The OnyxTrack contract provides the following functionality:
 
 ## Usage Example
 
-Below is a simple example of how to interact with the OnyxTrack contract using web3.js in JavaScript:
+Below is a simple example of how to interact with the AyaChain contract using web3.js in JavaScript:
 
 ```javascript
 const Web3 = require("web3");
