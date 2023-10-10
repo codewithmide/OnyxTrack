@@ -15,4 +15,8 @@ export const DashboardTabs = [
         icon: '/icons/track.png',
         title: 'Track Products',
     },
+    {
+        icon: '/icons/track.png',
+        title: 'Verify Product',
+    },
 ]

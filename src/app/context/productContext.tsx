@@ -6,7 +6,6 @@ import { Address, getContract } from 'viem';
 import {AyaChainAbi} from './AyaChainAbi';
 import {NFTStorage, File} from 'nft.storage';
 import { DIDWithKeys, KeyDIDMethod, createAndSignCredentialJWT, getSupportedResolvers, verifyCredentialJWT } from "@jpmorganchase/onyx-ssi-sdk";
-import { David_Libre } from 'next/font/google';
 
 const AyaChainAddress = "0xb715E099f67483A485782AaC292677cfCADCb420";
 
