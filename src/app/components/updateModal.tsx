@@ -113,14 +113,7 @@ export const UpdateModal = ( { product, modalType, onClose}: { product: IProduct
         setIsUpdating(false);
 
         const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 500));
-        toast.promise(
-            resolveAfter3Sec,
-            {
-                pending: 'Updating product',
-                success: 'Product updated successfully 👌',
-                error: 'Transaction failed 🤯'
-            }
-        )
+        toast.success('Product updated successfully 👌')
 
         const updateSuccessful = true;
 
