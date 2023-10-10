@@ -91,36 +91,16 @@ const Verify:React.FC = () => {
         {product && <div className='relative'>
             <div className="flex justify-center">
                 <div className='bg-white rounded-[16px] border border-[#0000001A] flex-col flex w-[340px] p-4 text-[16px] gap-2'>
+                    <p className='font-semibold my-2 mx-auto'>{product?.businessName}</p>
                     {product?.productImage && (
                         <img 
-                                                src={URL.createObjectURL(new File([product.productImage], 'product.png', { type: 'image/png' }))}
-                                                alt="image" className='w-full h-[250px] rounded-[12px] bg-cover object-cover' />
-                                            )}
-                                            <p className='font-semibold my-2'>{product?.businessName}</p>
-                                            <div className='between text-[14px]'>
-                                                <p className=''>Product ID:</p>
-                                                <p className="font-semibold">{String(product?.id).padStart(10, "0")}</p>
-                                            </div>
-                                            <div className='between text-[14px]'>
-                                                <p className='text-[14px] break-all'>Receiver&rsquo;s Address:</p>
-                                                <a href={`https://sepolia.etherscan.io/address/${product?.receiversAddress}`} target='_blank'>
-                                                    <span className='font-semibold text-blue'>{product?.receiversAddress.slice(0, 6)}..</span>
-                                                </a>
-                                            </div>
-                                            <div className='between text-[14px]'>
-                                                <p>Receiver&rsquo;s Location:</p>
-                                                <p className='font-semibold'>{product?.receiversLocation}</p>
-                                            </div>
-                                            <div className='between text-[14px]'>
-                                                <p>Status</p>
-                                                <p className='font-semibold'>{product?.status}</p>
-                                            </div>
-                                        </div>
-                                </div>
-                </div>}
+                            src={URL.createObjectURL(new File([product.productImage], 'product.png', { type: 'image/png' }))}
+                            alt="image" className='w-full h-[250px] rounded-[12px] bg-cover object-cover' />
+                    )}
                 </div>
-
-    );
+             </div>
+        </div>}
+    </div>);
 }
  
 export default Verify;
