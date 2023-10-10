@@ -8,6 +8,8 @@ This repository contains OnyxTrack project developed with Next.js, TypeScript, T
 
 [Smart contract](https://sepolia.etherscan.io/address/0xb715E099f67483A485782AaC292677cfCADCb420)
 
+[Faucet](https://sepoliafaucet.com)
+
 ## Table of Contents
 
 - [Project Overview](#project-overview)
