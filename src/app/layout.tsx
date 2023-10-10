@@ -3,8 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import WalletProvider from './context/walletContext'
 import { ProductProvider, useProductContext } from './context/productContext'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +23,7 @@ export default function RootLayout({
         <WalletProvider>
           <ProductProvider>
             {children}
-            <ToastContainer />
+            <Toaster />
           </ProductProvider>
         </WalletProvider>
       </body>

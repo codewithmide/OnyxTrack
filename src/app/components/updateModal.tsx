@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ImagePreview from '../profile/common/ImagePreview'
 import LoadingButton from '../profile/common/addProduct';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import { IProductInfo, useProductContext } from '../context/productContext';
 
 export const UpdateModal = ( { product, modalType, onClose}: { product: IProductInfo, modalType: "ship" | "update" | "deliver", onClose: () => void }) => {

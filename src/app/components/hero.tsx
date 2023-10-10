@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import React from "react";
 import CustomButton from "./common/button";
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import Link from 'next/link';
 
 const Hero: React.FC = () => {

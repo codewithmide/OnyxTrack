@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Address, useAccount } from 'wagmi';
 import ImagePreview from './common/ImagePreview';
 import { useProductContext } from '../context/productContext';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import LoadingButton from './common/addProduct';
 
 const Add: React.FC = () => {

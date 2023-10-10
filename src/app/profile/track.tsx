@@ -53,7 +53,7 @@ const Track: React.FC = () => {
                                 Get to know the realtime status of your product
                             </p>
                         </div>
-                        <div className='h-[160px] gap-2 mt-20 border rounded-[12px] border-[#0000001A] bg-white p-6 flex flex-col'>
+                        <div className='h-[160px] gap-2 mt-10 border rounded-[12px] border-[#0000001A] bg-white p-6 flex flex-col'>
                             <p className="font-semibold">
                                 Enter a Product ID
                             </p>

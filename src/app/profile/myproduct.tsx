@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi';
 import CustomButton from '../components/common/button';
 import { IProductInfo, useProductContext } from '../context/productContext';
 import { UpdateModal } from '../components/updateModal';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 const MyProduct: React.FC = () => {
     const { address } = useAccount();

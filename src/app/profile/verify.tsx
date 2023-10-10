@@ -4,7 +4,7 @@
 import { useAccount, useBalance } from "wagmi";
 import CustomButton from "../components/common/button";
 import { useState } from 'react';
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { useProductContext } from "../context/productContext";
 
 const Verify:React.FC = () => {
